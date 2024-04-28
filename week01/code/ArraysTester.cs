@@ -35,11 +35,20 @@ public static class ArraysTester {
     private static double[] MultiplesOf(double number, int length)
     {
         // TODO Problem 1 Start
-        // Remember: Using comments in your program, write down your process for solving this problem
-        // step by step before you write the code. The plan should be clear enough that it could
-        // be implemented by another person.
+        // Create a list 
+        var results = new double[length];
+       
+       //for loop that goes until the desired length
+        for(int i = 0; i < length; i++){
+            //create the multiple variable
+            double multiple = 0;
+            //get the next multiple
+            multiple += number;
+            //add multiple to the array
+            results[i] = multiple;
+        }
 
-        return new double[0]; // replace this return statement with your own
+        return results; // replace this return statement with your own
     }
     
     /// <summary>
@@ -52,10 +61,14 @@ public static class ArraysTester {
     /// </summary>
     private static void RotateListRight(List<int> data, int amount)
     {
-        // TODO Problem 2 Start
-        // Remember: Using comments in your program, write down your process for solving this problem
-        // step by step before you write the code. The plan should be clear enough that it could
-        // be implemented by another person.
+        //create a variable to hold a range of data
+        List<int> sliced = new List<int>();
+
+        //get the list items
+        sliced = data.GetRange(0, amount-1);
+        //add the list items to the back of the array
+        data.AddRange(sliced);
+        
 
     }
 }
