@@ -1,4 +1,7 @@
+using System.ComponentModel.Design;
 using System.Text.Json;
+using Microsoft.VisualBasic.FileIO;
+
 
 public static class SetsAndMapsTester {
     public static void Run() {
@@ -26,6 +29,20 @@ public static class SetsAndMapsTester {
         // 94 & 49
         // 31 & 13
 
+        static void DisplayPairs(string[] pairs){
+            var found = new HashSet<string>();
+            foreach(string pair in pairs){
+                string[] split = pair.Split("");
+                string newPair =$"{pair[1]}{pair[0]}";
+                
+                if(found.Contains(newPair)){
+                    Console.WriteLine($"{pair}&{pair[1]}{pair[0]}");
+                    
+                }
+                found.Add(pair);
+            }
+        }
+
         // Problem 2: Degree Summary
         // Sample Test Cases (may not be comprehensive) 
         Console.WriteLine("\n=========== Census TESTS ===========");
@@ -35,6 +52,31 @@ public static class SetsAndMapsTester {
         // [Masters, 1723], [9th, 514], [Some-college, 7291], [Assoc-acdm, 1067],
         // [Assoc-voc, 1382], [7th-8th, 646], [Doctorate, 413], [Prof-school, 576],
         // [5th-6th, 333], [10th, 933], [1st-4th, 168], [Preschool, 51], [12th, 433]}
+        var degrees = new Dictionary<string, int>();
+        using var reader = new TextFieldParser("census.txt");
+        reader.TextFieldType = FieldType.Delimited;
+        reader.SetDelimiters(",");
+        reader.ReadFields(); // ignore header row
+        while (!reader.EndOfData){
+             var fields = reader.ReadFields()!;
+            
+            var degree = fields[3];
+            if(degrees.ContainsKey(degree)){
+                int number = degrees[degree];
+                number += 1;
+                degrees[degree] = number;
+            }
+            else{
+                int number = 0;
+                degrees.Add(degree, number);
+            }
+        
+            
+        }
+        var degreeArray = degrees.ToArray();
+        for (int i = 0; i < degreeArray.Length; i++){
+            Console.WriteLine(degreeArray[i]);
+        }
 
         // Problem 3: Anagrams
         // Sample Test Cases (may not be comprehensive) 
@@ -49,6 +91,50 @@ public static class SetsAndMapsTester {
         Console.WriteLine(IsAnagram("tom marvolo riddle", "i am lord voldemort")); // true
         Console.WriteLine(IsAnagram("Eleven plus Two", "Twelve Plus One")); // true
         Console.WriteLine(IsAnagram("Eleven plus One", "Twelve Plus One")); // false
+
+        
+        static bool IsAnagram(string a, string b) {
+            var grams = new Dictionary<char, int>();
+            string newA = a.ToLower();
+            string newB = b.ToLower();
+            
+            foreach(char gram in newA){
+            if(gram != ' ')
+                if (grams.ContainsKey(gram)){
+                int number = grams[gram];
+                number += 1;
+                grams[gram] = number;
+                
+                }
+                else{
+                int number = 1;
+                grams.Add(gram, number);
+                
+                }
+            }
+           foreach(char gram in newB){
+            if(gram != ' ')
+                if(grams.ContainsKey(gram)){
+                int number = grams[gram];
+                number -= 1;
+                grams[gram] = number;
+            //  Console.WriteLine($"{gram}{grams[gram]}");
+                }
+                
+            }
+            int charCount = 0;
+            foreach(char gram in grams.Keys){
+                charCount += grams[gram];
+                Console.WriteLine($"{gram} {charCount}");   
+            }
+            if(charCount == 0){
+                    return true;
+                }
+                else{
+                    return false;
+                }
+        //    return false;
+        }
 
         // Problem 4: Maze
         Console.WriteLine("\n=========== Maze TESTS ===========");
