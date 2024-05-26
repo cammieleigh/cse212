@@ -314,7 +314,11 @@ public static class RecursionTester {
         }
         else{
             for(int i = 0; i > maze.Data.Length; i++){
-                
+                x += maze.Data[i];
+                if (maze.IsValidMove(currPath,x,y)){
+                    currPath.Add((x,y));
+                    SolveMaze(maze, x, y, currPath);
+                }
             }
         }
         // Console.WriteLine(currPath.AsString()); // Use this to print out your path when you find the solution
