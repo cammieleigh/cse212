@@ -38,6 +38,8 @@ public static class TreesTester {
         tree.Insert(12);
         Console.WriteLine(tree.GetHeight()); // 4
 
+
+
         Console.WriteLine("\n=========== PROBLEM 5 TESTS ===========");
         var tree1 = CreateTreeFromSortedList(new[] { 10, 20, 30, 40, 50, 60 });
         var tree2 = CreateTreeFromSortedList(Enumerable.Range(0, 127).ToArray()); // 2^7 - 1 nodes
